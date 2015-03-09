@@ -1,6 +1,7 @@
+import sys
 import re
 dic={}
-def inverted_index(file=open("teste_file_ex1.txt","r")):
+def inverted_index(file=open("lab02_documents.txt","r")):
 	line_spliter = re.compile('\W+')
 	my_count={}
 	var=1
@@ -18,8 +19,27 @@ def print_dic(dictionary):
 	for (key,value) in dictionary.items():
 		print key + " -> " + str(value)
 
+def document_frequency(words=sys.argv[1:]):
+	maxi = 0
+	print "****************"
+	for k in words:
+		print k + " -> " + str(len(dic[k]))	
+		for i in dic[k]:
+			if i[1] > maxi:
+				maxi = i[1]
+		print "maximo: " + str(maxi)
+		maxi=0
+	print "****************"
+
 print_dic(inverted_index())
-print str(len(open("teste_file_ex1.txt","r").readlines())) + " documents"
+document_frequency()
+print str(len(open("lab02_documents.txt","r").readlines())) + " documents"
 print str(len(dic.keys())) + " terms"
+
+
+
+
+
+
 
 
