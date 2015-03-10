@@ -1,11 +1,16 @@
 from whoosh.index import open_dir
 from whoosh.qparser import *
 
-ix = open_dir("indexdir")
+def query(word=sys.argv[1:]):
+	a = []
+	t = word[0].decode("unicode-escape")
+	ix = open_dir("indexdir")
 
-with ix.searcher() as searcher:
-    query = QueryParser("content", ix.schema, group=OrGroup).parse(u"first method")
-    results = searcher.search(query, limit=100)
-    for r in results:
-        print r
-    print "Number of results:", results.scored_length()
+	with ix.searcher() as searcher:
+		query = QueryParser("content", ix.schema, group=OrGroup).parse(t)
+		results = searcher.search(query, limit=100)
+		for r in results:
+			a.append(int(str(r["id"])))
+	return sorted(a)
+
+print query()
