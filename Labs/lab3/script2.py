@@ -11,6 +11,7 @@ def query(word=sys.argv[1:]):
 		results = searcher.search(query, limit=100)
 		for r in results:
 			a.append(int(str(r["id"])))
-	return sorted(a)
+	print str(len(a)) + " documents."
+	return a
 
 print query()
