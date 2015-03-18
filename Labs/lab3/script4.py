@@ -1,3 +1,4 @@
+from __future__ import division
 from whoosh.index import open_dir
 from whoosh.qparser import *
 import math
@@ -9,6 +10,10 @@ file = open(FILENAME,'r').readlines()
 ix = open_dir(FOLDER_NAME)
 query_results = []
 query_goal = []
+
+avg_intersection = 0
+avg_precision = 0 
+avg_recall = 0
 
 for i in range(len(file))[::2]:
 	a = []
@@ -33,7 +38,11 @@ for (retrived,relevant) in zip(query_results,query_goal):
 	print "r " + str(recall)
 	print "f " + str(f1)
 
+	avg_intersection += intersect / 100
+	avg_precision += precision / 100
+	avg_recall += recall / 100
 
-
-
-
+print "AVERAGEVALUES:"
+print avg_intersection
+print avg_precision 
+print avg_recall
