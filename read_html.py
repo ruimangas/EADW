@@ -28,6 +28,6 @@ def jornalNoticiasParser(soup):
 
 
 if __name__ == '__main__':
-    parseHTML("http://feeds.jn.pt/~r/JN-ULTIMAS/~3/9iB77Axg2DQ/Interior.aspx", jornalNoticiasParser)
+    print parseHTML("http://feeds.jn.pt/~r/JN-ULTIMAS/~3/9iB77Axg2DQ/Interior.aspx", jornalNoticiasParser)
 
 #O dn tem varios tipos de rss, adicionar todos
