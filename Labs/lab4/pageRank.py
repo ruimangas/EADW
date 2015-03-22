@@ -4,32 +4,60 @@ from __future__ import division
 # l -> interactions
 # graph -> dictionary
 
-lines = open("aula04_links.txt").readline()
+with open("aula04_links.txt") as f: lines = f.readlines()
 inverted_index = {}
 
 for line in lines:
-	a = map(int, line.strip().split())
-	for link in a[1:]:
-		inverted_index.setdefault(link, set()).add(a[0])
+	links = map(int, line.strip().split())
+	inverted_index.setdefault(links[0], set()) 
+	for link in links[1:]:
+		inverted_index.setdefault(link, set()).add(links[0])
 
-def pageRank(graph,d,l):
-	number = len(graph)
-	dic = {}
-	pageRank = {key: 1/len(graph) for key in graph.keys()}
-	pageRank_next = pageRank.copy()
-	for (key,value) in graph.iteritems():
-		dic[key] = len(value)
+def links_inverter(links_index):
+	"""
+		Transform a group of outbound links into inbound or inbound to outbound
+	"""
+	inverted_index = {}
+	for (linkkey, linkset) in links_index.iteritems():
+		inverted_index.setdefault(linkkey, set())   
+		for link in linkset:
+			inverted_index.setdefault(link, set()).add(linkkey)
+	return inverted_index
+
+
+def pageRank(graph, d, l):
+	numNodes = len(graph) 
+	pageRank = {key: 1/numNodes for key in graph.keys()}
+	pageRank_next = {}
+
+	outbound_links = {key: len(value) for (key,value) in links_inverter(graph).iteritems()}
 	for i in range(l):
-		for (j, val) in graph.iteritems():
-			pageRank_next[j] = d*(1/number)+(1-d)*sum([pageRank[link]/dic[link] for link in val])
+		for (node, inlinks) in graph.iteritems():
+			pageRank_next[node] = (1-d)/numNodes + d *\
+					sum([pageRank[link]/outbound_links[link] for link in inlinks])
 		pageRank = pageRank_next.copy()
 	return pageRank
 
-print pageRank({1:[3],2:[1,3],3:[1,2]},0.1,2)
+"""
+pageRank_next[j] = d*(1/numNodes)
+	pageRank_next[j] += (1-d)*sum([pageRank[link]/outbound_links[link] for link in val])
+"""
 
+def converge(diff=0.000001):
+	"""
+		Calculates iteration necessary for algorith to converge,
+		d = 0.85
+		(Only checks if the first item converged)
+	"""
+	pagerank_val, iterations = 1, 1
+	while True:
+		after = pageRank(inverted_index, 0.85, iterations).values()[0]
+		if abs(pagerank_val - after) < diff: break
+		iterations +=1
+		pagerank_val = after
+	print "Converged to", diff, "in",iterations,"iterations."
 
-
-
+converge()
 
 
 
