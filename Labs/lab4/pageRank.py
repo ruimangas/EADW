@@ -33,14 +33,20 @@ def pageRank(graph, d, l):
 	outbound_links = {key: len(value) for (key,value) in links_inverter(graph).iteritems()}
 	for i in range(l):
 		for (node, inlinks) in graph.iteritems():
-			pageRank_next[node] = (1-d)/numNodes + d *\
+			pageRank_next[node] = d/numNodes +(1-d)*\
 					sum([pageRank[link]/outbound_links[link] for link in inlinks])
 		pageRank = pageRank_next.copy()
 	return pageRank
 
+
+
+
 """
 pageRank_next[j] = d*(1/numNodes)
 	pageRank_next[j] += (1-d)*sum([pageRank[link]/outbound_links[link] for link in val])
+
+	pageRank_next[node] = (1-d)/numNodes + d *\
+					sum([pageRank[link]/outbound_links[link] for link in inlinks])
 """
 
 def converge(diff=0.000001):
@@ -57,7 +63,11 @@ def converge(diff=0.000001):
 		pagerank_val = after
 	print "Converged to", diff, "in",iterations,"iterations."
 
-converge()
+#converge()
+#pageRank(inverted_index, 0.85,1)
+
+
+# sum(pageRank(inverted_index, 0.85,10).values())
 
 
 
