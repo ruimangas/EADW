@@ -10,7 +10,6 @@ import pageRank
 
 ranks = pageRank.pageRank(pageRank.inverted_index, 0.85, 10)
 
-
 ix = open_dir("../lab3/indexdir")
 with ix.searcher() as searcher:
     query = QueryParser("content", ix.schema, group=OrGroup).parse(u"first document")
