@@ -37,5 +37,5 @@ http://feeds.jn.pt/JN-Destaques
 
 
 
-#http://feeds.dn.pt/DN-Ultimas <- deve ser um conjunto dos outros
+#http://feeds.dn.pt/DN-Ultimas <- pode ter repetidas
 #http://feeds.jn.pt/JN-ULTIMAS

@@ -16,7 +16,7 @@ def parseHTML(news_url):
         Opens an url and parses the html for important data to be stored
     """
     parser = html_parsers[domainGet(news_url)]
-    if not parser: 
+    if not parser:
         raise DomainNotFoundError(news_url)
     try:
         res = urllib.urlopen(news_url)
@@ -38,10 +38,16 @@ def jornalNoticiasParser(soup):
         NOTE: The page organization is not always the same,
         had 1 exception throws where newsTitle was not found (calling .string on NoneType)
     """
-    title = soup.find(id='newsTitle').string
-    post_title = soup.find_all('div','postTitle')[0].string
+    title = soup.find(id='newsTitle')
+    post_title = soup.find_all('div','postTitle')
     text = soup.find(id='Article')
-    return [title, post_title] + [s.string for s in text.find_all('p') if s.string ] # one of the parts may return none
+
+    #Parser must return title and body
+    if not title or not text: return
+
+    post_title = post_title[0].string if post_title else []
+    return [title.string] + [post_title]\
+            + [s.string for s in text.find_all('p') if s.string ] # one of the parts may return none
 
 
 class DomainNotFoundError(Exception):
