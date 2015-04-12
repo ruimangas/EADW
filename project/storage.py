@@ -7,10 +7,9 @@ from whoosh.fields import *
 from whoosh.writing import AsyncWriter
 from whoosh.index import open_dir
 from whoosh.qparser import *
-from collections import Counter
 
 CREATE_NEWS_TABLE = """ CREATE TABLE IF NOT EXISTS news
-                            (link TEXT PRIMARYKEY,
+                            (link TEXT PRIMARY KEY,
                              title TEXT NOT NULL,
                              date TEXT NOT NULL);"""
 
@@ -57,36 +56,24 @@ class NewsIndexing:
         self.TARGET_DIR = "NewsIndex"
         if not os.path.exists(self.TARGET_DIR):
             os.mkdir(self.TARGET_DIR)
-        self.schema = Schema(link=TEXT, content=TEXT)
-        self.ix = create_in(self.TARGET_DIR, self.schema)
+            self.schema = Schema(link=TEXT(stored=True),\
+                                 title=TEXT,\
+                                 document=TEXT)
+            self.ix = create_in(self.TARGET_DIR, self.schema)
+        else:
+            self.ix = open_dir(self.TARGET_DIR)
 
-    def insert(self, link, document):
+    def insert(self, link, title, document):
         writer = AsyncWriter(self.ix)
-        writer.add_document(link = link,content=document)
+        writer.add_document(link=link,title=title, document=document)
         writer.commit()
+
 
     def search(self,content):
         a = []
-        ix = open_dir(self.TARGET_DIR)
-        with ix.searcher() as searcher:
-            query = QueryParser("content", ix.schema, group=OrGroup).parse(content.decode())
+        with self.ix.searcher() as searcher:
+            query = QueryParser("document", self.ix.schema, group=OrGroup).parse(content.decode())
             results = searcher.search(query, limit=100)
-            print results
             for r in results:
-                print r
-        print "found " + str(len(a)) + " news."
+                a.append(r["link"])
         return a
-
-
-
-            
-
-
-
-
-
-
-
-
-
-

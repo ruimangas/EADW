@@ -19,7 +19,7 @@ def html_parser_thread(link, date):
 
     success = NewsDatabase().insert(link, news[0], date)
     if success :
-        indexing.insert(news[0], ' '.join(news[1:]))
+        indexing.insert(link, news[0], ' '.join(news[1:]))
         print "Stored: "+ news[0]
 
 
@@ -51,7 +51,8 @@ def index_news(filepath="rss.txt"):
 def search_news():
     query = raw_input("Please enter something to search for: ")
     results = indexing.search(query)
-    for new in results: print new
+    for link in results:
+        print link
 
 def init():
     """
