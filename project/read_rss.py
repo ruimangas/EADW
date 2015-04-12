@@ -62,9 +62,10 @@ def init():
 def cmd_line():
     options = {
         '1': lambda:index_news(),
-        '0' : lambda:sys.exit(0)
+        '2': lambda:search_news(),
+        '0': lambda:sys.exit(0)
     }
-    with open("titlescreen.txt") as f:
+    with open("project/titlescreen.txt") as f:
         print f.read()
 
     while 1:
