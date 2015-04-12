@@ -1,6 +1,10 @@
 #!/usr/bin/python
 
 import sqlite3
+import os.path
+from whoosh.index import create_in
+from whoosh.fields import *
+from whoosh.writing import AsyncWriter
 
 CREATE_NEWS_TABLE = """ CREATE TABLE IF NOT EXISTS news
                             (link TEXT PRIMARYKEY,
@@ -42,3 +46,19 @@ class NewsDatabase:
         cursor = conn.cursor()
         cursor.execute(CREATE_NEWS_TABLE)
         return (conn, cursor)
+
+
+class NewsIndexing:
+
+    def __init__(self):
+        self.TARGET_DIR = "NewsIndex"
+        if not os.path.exists(self.TARGET_DIR):
+            os.mkdir(self.TARGET_DIR)
+        self.schema = Schema(link=TEXT, content=TEXT)
+        self.ix = create_in(self.TARGET_DIR, self.schema)
+
+    def insert(self, link, document):
+
+        writer = AsyncWriter(self.ix)
+        writer.add_document(link=link,content=document)
+        writer.commit()
