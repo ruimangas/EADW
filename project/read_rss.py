@@ -48,6 +48,9 @@ def index_news(filepath="rss.txt"):
     for thr in threads: thr.join()
     print "<ALL DONE>"
 
+def search_news():
+
+
 def init():
     """
         Parses the rss file for the rss links,
@@ -65,12 +68,12 @@ def cmd_line():
         '2': lambda:search_news(),
         '0': lambda:sys.exit(0)
     }
-    with open("project/titlescreen.txt") as f:
+    with open("titlescreen.txt") as f:
         print f.read()
 
     while 1:
-
-        print "1) Fetch News"
+    	print "1) Fetch News"
+    	print "2) Search news"
         print "0) Quit"
 
         cmd = raw_input(">>").strip()
