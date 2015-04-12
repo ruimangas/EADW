@@ -5,6 +5,9 @@ import os.path
 from whoosh.index import create_in
 from whoosh.fields import *
 from whoosh.writing import AsyncWriter
+from whoosh.index import open_dir
+from whoosh.qparser import *
+from collections import Counter
 
 CREATE_NEWS_TABLE = """ CREATE TABLE IF NOT EXISTS news
                             (link TEXT PRIMARYKEY,
@@ -58,7 +61,32 @@ class NewsIndexing:
         self.ix = create_in(self.TARGET_DIR, self.schema)
 
     def insert(self, link, document):
-
         writer = AsyncWriter(self.ix)
-        writer.add_document(link=link,content=document)
+        writer.add_document(link = link,content=document)
         writer.commit()
+
+    def search(self,content):
+        a = []
+        ix = open_dir(self.TARGET_DIR)
+        with ix.searcher() as searcher:
+            query = QueryParser("content", ix.schema, group=OrGroup).parse(content.decode())
+            results = searcher.search(query, limit=100)
+            print results
+            for r in results:
+                print r
+        print "found " + str(len(a)) + " news."
+        return a
+
+
+
+            
+
+
+
+
+
+
+
+
+
+

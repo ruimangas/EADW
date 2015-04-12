@@ -49,7 +49,9 @@ def index_news(filepath="rss.txt"):
     print "<ALL DONE>"
 
 def search_news():
-
+    query = raw_input("Please enter something to search for: ")
+    results = indexing.search(query)
+    for new in results: print new
 
 def init():
     """
