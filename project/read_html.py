@@ -7,7 +7,6 @@ DN = 'dn'
 JN = 'jn'
 
 
-
 def domainGet(link):
     return re.search(re.compile('.(?P<dom>\w+).pt'), link).group('dom')
 

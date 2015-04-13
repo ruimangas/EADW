@@ -17,7 +17,7 @@
 #http://feeds.jn.pt/JN-Saude
 #http://feeds.jn.pt/JN-Educacao
 http://feeds.jn.pt/JN-Media
-http://feeds.jn.pt/JN-Seguranca
+#http://feeds.jn.pt/JN-Seguranca
 #http://feeds.jn.pt/JN-Economia
 #http://feeds.jn.pt/JN-Pais
 #http://feeds.jn.pt/JN-Mundo

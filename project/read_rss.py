@@ -2,10 +2,13 @@
 import os
 import sys
 import feedparser
-
+sys.path.append('./storageTools')
+sys.path.append('./entities')
 from threading import Thread
 from read_html import parseHTML
-from storage import NewsDatabase, NewsIndexing
+from whoosh_tools import NewsIndexing
+from mongo_tools import *
+from nameOfEntities import *
 
 NEWS_LIMIT = 99
 
@@ -15,14 +18,11 @@ def html_parser_thread(link, date):
         the resulting contents into the storage
     """
     news = parseHTML(link)
-    if not news: return ##something wrong happened
+    if not news: return
 
-    success = NewsDatabase().insert(link, news[0], date,  ' '.join(news[1:]))
-    if success :
-        indexing.insert(link, news[0], ' '.join(news[1:]))
-        print "Stored: "+ news[0]
-
-
+    success = addNews(link, news[0], date,  ' '.join(news[1:]))
+    indexing.insert(link, news[0], ' '.join(news[1:]))
+    print "Stored: "+ news[0]
 
 def rss_parser_thread(rss, limit=NEWS_LIMIT):
 	"""
@@ -51,9 +51,17 @@ def index_news(filepath="rss.txt"):
 def search_news():
     query = raw_input("Please enter something to search for: ")
     results = indexing.search(query)
-    for link in results:
-        print link
-    print str(len(results)) + " news found."
+    print str(len(results)) + " Articles found:"
+    show_results(results)
+
+def show_results(results):
+    for r in results:
+        print getNews(r)
+
+def show_all_news():
+    for n in getAllnews():
+        print n['title'] + ":\n" + n['document'] + "\n"
+    list_of_entities()
 
 def init():
     """
@@ -70,6 +78,7 @@ def cmd_line():
     options = {
         '1': lambda:index_news(),
         '2': lambda:search_news(),
+        '3': lambda:show_all_news(),
         '0': lambda:sys.exit(0)
     }
     with open("titlescreen.txt") as f:
@@ -78,6 +87,7 @@ def cmd_line():
     while 1:
     	print "1) Fetch News"
     	print "2) Search news"
+        print "3) Get All News"
         print "0) Quit"
 
         cmd = raw_input(">>").strip()
