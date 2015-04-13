@@ -5,9 +5,8 @@ import pymongo
 
 
 def list_of_entities():
-	file = open("personalidades.txt", "r").readlines()
-	entities = {}
+	file = open("output.txt", "r").readlines()
+	entities = []
 	for line in file:
-		print line
-		entities = line
-	print entities
+		entities.append(line)
+	
