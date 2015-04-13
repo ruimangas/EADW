@@ -11,7 +11,7 @@ from whoosh.qparser import *
 class NewsIndexing:
 
     def __init__(self):
-        self.TARGET_DIR = "NewsIndex"
+        self.TARGET_DIR = "newsIndex"
         if not os.path.exists(self.TARGET_DIR):
             os.mkdir(self.TARGET_DIR)
             self.schema = Schema(link=TEXT(stored=True),\

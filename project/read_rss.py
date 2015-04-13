@@ -2,11 +2,13 @@
 import os
 import sys
 import feedparser
-sys.path.append('./StorageTools')
+sys.path.append('./storageTools')
+sys.path.append('./entities')
 from threading import Thread
 from read_html import parseHTML
 from whoosh_tools import NewsIndexing
 from mongo_tools import *
+from nameOfEntities import *
 
 NEWS_LIMIT = 99
 
@@ -59,6 +61,7 @@ def show_results(results):
 def show_all_news():
     for n in getAllnews():
         print n['title'] + ":\n" + n['document'] + "\n"
+    list_of_entities()
 
 def init():
     """
