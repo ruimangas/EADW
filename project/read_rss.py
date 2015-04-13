@@ -58,7 +58,7 @@ def show_results(results):
 
 def show_all_news():
     for n in getAllnews():
-        print n['title'] + ":\n" + n['document'] + "\n" 
+        print n['title'] + ":\n" + n['document'] + "\n"
 
 def init():
     """
