@@ -10,7 +10,9 @@ def query(word=sys.argv[1:]):
 		query = QueryParser("content", ix.schema, group=OrGroup).parse(t)
 		results = searcher.search(query, limit=100)
 		for r in results:
-			a.append(int(str(r["id"])))
+			print r
+			a.append(str(r["id"]))
+	print results
 	print str(len(a)) + " documents."
 	return a
 

@@ -17,7 +17,7 @@ def html_parser_thread(link, date):
     news = parseHTML(link)
     if not news: return ##something wrong happened
 
-    success = NewsDatabase().insert(link, news[0], date)
+    success = NewsDatabase().insert(link, news[0], date,  ' '.join(news[1:]))
     if success :
         indexing.insert(link, news[0], ' '.join(news[1:]))
         print "Stored: "+ news[0]
@@ -53,6 +53,7 @@ def search_news():
     results = indexing.search(query)
     for link in results:
         print link
+    print str(len(results)) + " news found."
 
 def init():
     """

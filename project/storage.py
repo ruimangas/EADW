@@ -11,9 +11,10 @@ from whoosh.qparser import *
 CREATE_NEWS_TABLE = """ CREATE TABLE IF NOT EXISTS news
                             (link TEXT PRIMARY KEY,
                              title TEXT NOT NULL,
-                             date TEXT NOT NULL);"""
+                             date TEXT NOT NULL,
+                             document TEXT NOT NULL);"""
 
-INSERT_FORMATTER = "INSERT INTO news VALUES (?,?,?);"
+INSERT_FORMATTER = "INSERT INTO news VALUES (?,?,?,?);"
 
 
 class NewsDatabase:
@@ -30,14 +31,14 @@ class NewsDatabase:
         return _dec_
 
     @commit_and_close
-    def insert(self, link, title, date):
+    def insert(self, link, title, date, document):
         """
             Attempts to insert the values into the database
             returns the success of the operation
         """
         try:
             with self.conn:
-                self.conn.execute(INSERT_FORMATTER, (link, title, date))
+                self.conn.execute(INSERT_FORMATTER, (link, title, date, document))
             return True
         except sqlite3.IntegrityError:
             return False
@@ -48,7 +49,6 @@ class NewsDatabase:
         cursor = conn.cursor()
         cursor.execute(CREATE_NEWS_TABLE)
         return (conn, cursor)
-
 
 class NewsIndexing:
 
@@ -65,7 +65,7 @@ class NewsIndexing:
 
     def insert(self, link, title, document):
         writer = AsyncWriter(self.ix)
-        writer.add_document(link=link,title=title, document=document)
+        writer.add_document(link=link,title=title, document=document + title)
         writer.commit()
 
 
