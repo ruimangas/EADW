@@ -52,13 +52,13 @@ def search_news():
     print str(len(results)) + " Articles found:"
     show_results(results)
 
-def show_results(links):
-    for link in links:
-        print getNews(link)
+def show_results(results):
+    for r in results:
+        print getNews(r)
 
 def show_all_news():
     for n in getAllnews():
-        print n
+        print n['title'] + ":\n" + n['document'] + "\n" 
 
 def init():
     """
