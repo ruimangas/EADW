@@ -19,7 +19,8 @@ def html_parser_thread(link, date):
     if not news: return
 
     success = addNews(link, news[0], date,  ' '.join(news[1:]))
-    indexing.insert(link, news[0], ' '.join(news[1:]))
+    if success:
+        indexing.insert(link, news[0], ' '.join(news[1:]))
     print "Stored: "+ news[0]
 
 def rss_parser_thread(rss, limit=NEWS_LIMIT):
@@ -59,7 +60,7 @@ def show_results(results): #results: news links
             print getNews(r) + " | " + k
 
 def show_all_news():
-    for n in getAllnews():
+    for n in getAllNews():
         print n['title'] + ":\n" + n['document'] + "\n"
 
 def init():

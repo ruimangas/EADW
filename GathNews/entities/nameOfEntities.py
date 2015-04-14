@@ -50,7 +50,7 @@ def retrieve_entities(link):
 
 	report = peps.find_one({"link" : link})
 
-	if report['entities']:
+	if report["entities"]:
 		return report['entities']
 	else: return ["No entities found."]
 
