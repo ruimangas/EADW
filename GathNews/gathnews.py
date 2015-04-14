@@ -4,8 +4,8 @@ import sys
 import feedparser
 from threading import Thread
 from read_html import parseHTML
-from StorageTools.whoosh_tools import NewsIndexing
-from StorageTools.mongo_tools import *
+from storageTools.whoosh_tools import NewsIndexing
+from storageTools.mongo_tools import *
 from entities.nameOfEntities import *
 
 NEWS_LIMIT = 99
