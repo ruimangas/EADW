@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-
+import gathnews
 
 app = Flask(__name__)
 
@@ -10,9 +10,9 @@ def index():
 
 @app.route('/search')
 def search():
-#return request.args.get("query")
-
-    return jsonify(**{"link": "karan", "title": "mangas"})
+	query = request.args.get("query") 
+	return gathnews.search(query) if query else jsonify(news = [])
+    #return jsonify(**{"link": "karan", "title": "mangas"})
 
 if __name__ == "__main__":
     app.run(debug=True)

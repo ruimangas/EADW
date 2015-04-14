@@ -1,16 +1,15 @@
 (function ($) {
 
-    var News = Backbone.Model.extend({
-        defaults: {
-            title: '',
-            link: ''
-        }
-    });
+    var News = Backbone.Model;
 
     var NewsList = Backbone.Collection.extend({
 
         model: News,
-        url: '/search'
+        url: '/search',
+
+        parse: function (response) {
+            return response.news
+        }
     });
 
 
@@ -31,7 +30,6 @@
         render: function () {
             var self = this;
             if (!this.expanded) {
-                console.log("fuck")
                 $("div.page-container").toggleClass("page-container page-container-expanded");
                 $("ul.search-list").addClass("highlight-list");
                 this.expanded = true;
@@ -46,6 +44,7 @@
         listNews : function () {
 
             $("ul.search-list").empty();
+            console.log(this.collection.models)
             _(this.collection.models).each(function (item) {
                 $('ul', self.el).append("<li><a href="+ item.get("link")+">"+item.get("title") + "</a></li>");
             });

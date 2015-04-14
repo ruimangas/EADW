@@ -24,7 +24,6 @@ def getNews(link):
 
 	if report:
 		return report['title'] 
-	else: return "Empty"
 
 
 def getAllnews():
