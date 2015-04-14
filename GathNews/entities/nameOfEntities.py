@@ -9,7 +9,7 @@ def list_of_entities():
 	db = client.test
 	news = db.news
 
-	file = open("output.txt", "r").readlines()
+	file = open("./res/output.txt", "r").readlines()
 	entities = []
 	for line in file:
 		entities.append(line.strip())
