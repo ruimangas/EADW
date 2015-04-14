@@ -1,30 +1,29 @@
-from pymongo import MongoClient
+from pymongo import MongoClient, IndexModel
 
 def MongoConnection():
 	client = MongoClient('localhost', 27017)
-	return client
+	db = client['gathnews']
+	db.news.ensure_index('link', unique=True)
+
+	return db
 
 def addNews(link,title,date,document):
-	client = MongoConnection()
-	db = client.test
-	news = db.news
+	db = MongoConnection()
 	newReport = {'link' : link, 'title' : title, 'date' : date, 'document' : document}
 	#news.save(newReport) #-> insert or update with upsert
-	news.update({"link":link}, newReport, True);
+	try:
+		db.news.insert_one( newReport )
+		return True
+	except:
+		return False
 
 def getNews(link):
-	client = MongoConnection()
-	db = client.test
-	news = db.news
-	report = news.find_one({"link" : link})
+	db = MongoConnection()
+	hit = db.news.find_one({"link" : link})
 
-	if report:
-		return report['title']
-	else: return "Empty"
+	if hit:
+		return hit['title']
 
-def getAllnews():
-	client = MongoConnection()
-	db = client.test
-	news = db.news
-
-	return news.find()
+def getAllNews():
+	db = MongoConnection()
+	return db.news.find()

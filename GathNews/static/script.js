@@ -5,7 +5,9 @@
     var NewsList = Backbone.Collection.extend({
 
         model: News,
-        url: '/search',
+        url: function () {
+            return "search?" + $('input#query-input').serialize();
+        },
 
         parse: function (response) {
             return response.news

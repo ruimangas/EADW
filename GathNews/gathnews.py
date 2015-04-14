@@ -19,7 +19,8 @@ def html_parser_thread(link, date):
     if not news: return
 
     success = addNews(link, news[0], date,  ' '.join(news[1:]))
-    indexing.insert(link, news[0], ' '.join(news[1:]))
+    if success:
+        indexing.insert(link, news[0], ' '.join(news[1:]))
     print "Stored: "+ news[0]
 
 def rss_parser_thread(rss, limit=NEWS_LIMIT):
@@ -48,11 +49,16 @@ def index_news(filepath="res/rss.txt"):
 
 
 def search(query):
-    return indexing.search(query)
+    news = []
+    for link in indexing.search(query):
+        title = getNews(link)
+        if title:
+            news.append({'link':link , 'title': title})
+    return news
 
 def search_news():
     query = raw_input("Please enter something to search for: ")
-    search(query)
+    results = indexing.search(query)
     print str(len(results)) + " Articles found:"
     show_results(results)
 

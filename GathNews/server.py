@@ -10,8 +10,9 @@ def index():
 
 @app.route('/search')
 def search():
-	query = request.args.get("query") 
-	return gathnews.search(query) if query else jsonify(news = [])
+    query = request.args.get("query")
+    print query
+    return jsonify(news=(gathnews.search(query) if query else []))
     #return jsonify(**{"link": "karan", "title": "mangas"})
 
 if __name__ == "__main__":
