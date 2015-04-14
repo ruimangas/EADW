@@ -6,15 +6,14 @@ def MongoConnection():
 
 def addNews(link,title,date,document):
 	client = MongoConnection()
-	db = client.test
+	db = client.eadw
 	news = db.news
 	newReport = {'link' : link, 'title' : title, 'date' : date, 'document' : document}
-	#news.save(newReport) #-> insert or update with upsert
 	news.update({"link":link}, newReport, True);
 
 def getNews(link):
 	client = MongoConnection()
-	db = client.test
+	db = client.eadw
 	news = db.news
 	report = news.find_one({"link" : link})
 
@@ -24,7 +23,7 @@ def getNews(link):
 
 def getAllnews():
 	client = MongoConnection()
-	db = client.test
+	db = client.eadw
 	news = db.news
 
 	return news.find()

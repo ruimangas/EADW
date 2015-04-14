@@ -46,27 +46,21 @@ def index_news(filepath="res/rss.txt"):
     for thr in threads: thr.join()
     print "<ALL DONE>"
 
-
-def search(query):
-    return indexing.search(query)
-
 def search_news():
     query = raw_input("Please enter something to search for: ")
-    results = search(query)
+    results = indexing.search(query)
     print str(len(results)) + " Articles found:"
+    list_of_entities()
     show_results(results)
 
-def show_results(results):
-    for r in results:
-        print getNews(r)
+def show_results(results): #results: news links
+    for r in results: 
+        for k in retrieve_entities(r):
+            print getNews(r) + " | " + k
 
 def show_all_news():
     for n in getAllnews():
         print n['title'] + ":\n" + n['document'] + "\n"
-    news = list_of_entities()
-    print "FOUND " + str(len(news)) + " PERSON NAMES."
-    for name in news:
-        print name
 
 def init():
     """

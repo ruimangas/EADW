@@ -2,11 +2,12 @@ import nltk
 import re
 from nltk.tag import *
 from pymongo import MongoClient	
+from storageTools.mongo_tools import *
 
 
 def list_of_entities():
-	client = MongoClient('localhost', 27017)
-	db = client.test
+	client = MongoConnection()
+	db = client.eadw
 	news = db.news
 
 	file = open("./res/output.txt", "r").readlines()
@@ -14,10 +15,11 @@ def list_of_entities():
 	for line in file:
 		entities.append(line.strip())
 
-	cursor = news.find() #get all news
-	allThePeople = []
+	cursor = news.find() #get all news from mongo
+	print "checking..."
 	for article in cursor:
-		print "checking " + article["title"]
+		allThePeople = []
+		print "checking..."
 		for sentence in nltk.sent_tokenize(article["document"]):
 			for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence))):
 				if hasattr(chunk, "label"):
@@ -28,6 +30,33 @@ def list_of_entities():
 								allThePeople.append(people)
 						else: continue
 
+		insert_new_collections(allThePeople,article)
+
 	print "DONE!"
-	return allThePeople
-	
+
+def insert_new_collections(allPersons, oldArticle):
+	client = MongoConnection()
+	db = client.eadw
+	peps = db.namesOfPersons
+
+	newArticle = oldArticle
+	newArticle['entities'] = allPersons
+	peps.update({"link":newArticle['link']}, newArticle, True);
+
+def retrieve_entities(link):
+	client = MongoConnection()
+	db = client.eadw
+	peps = db.namesOfPersons
+
+	report = peps.find_one({"link" : link})
+
+	if report['entities']:
+		return report['entities']
+	else: return ["No entities found."]
+
+
+
+
+
+
+
