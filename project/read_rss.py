@@ -61,7 +61,10 @@ def show_results(results):
 def show_all_news():
     for n in getAllnews():
         print n['title'] + ":\n" + n['document'] + "\n"
-    list_of_entities()
+    news = list_of_entities()
+    print "FOUND " + str(len(news)) + " PERSON NAMES."
+    for name in news:
+        print name
 
 def init():
     """
