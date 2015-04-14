@@ -52,7 +52,7 @@ def search(query):
 
 def search_news():
     query = raw_input("Please enter something to search for: ")
-    search(query)
+    results = search(query)
     print str(len(results)) + " Articles found:"
     show_results(results)
 
