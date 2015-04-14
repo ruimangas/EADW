@@ -6,7 +6,7 @@ from storageTools.mongo_tools import *
 
 
 def list_of_entities():
-	client = MongoConnection()
+	client = MongoClient('localhost', 27017)
 	db = client.eadw
 	news = db.news
 
@@ -16,7 +16,6 @@ def list_of_entities():
 		entities.append(line.strip())
 
 	cursor = news.find() #get all news from mongo
-	print "checking..."
 	for article in cursor:
 		allThePeople = []
 		print "checking..."
@@ -35,7 +34,7 @@ def list_of_entities():
 	print "DONE!"
 
 def insert_new_collections(allPersons, oldArticle):
-	client = MongoConnection()
+	client = MongoClient('localhost', 27017)
 	db = client.eadw
 	peps = db.namesOfPersons
 
@@ -44,13 +43,13 @@ def insert_new_collections(allPersons, oldArticle):
 	peps.update({"link":newArticle['link']}, newArticle, True);
 
 def retrieve_entities(link):
-	client = MongoConnection()
+	client = MongoClient('localhost', 27017)
 	db = client.eadw
 	peps = db.namesOfPersons
 
 	report = peps.find_one({"link" : link})
 
-	if report["entities"]:
+	if report['entities']:
 		return report['entities']
 	else: return ["No entities found."]
 

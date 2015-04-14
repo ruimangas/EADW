@@ -47,6 +47,14 @@ def index_news(filepath="res/rss.txt"):
     for thr in threads: thr.join()
     print "<ALL DONE>"
 
+def search(query):
+    news = []
+    for link in indexing.search(query):
+        title = getNews(link)
+        if title:
+            news.append({'link':link , 'title': title})
+    return news
+
 def search_news():
     query = raw_input("Please enter something to search for: ")
     results = indexing.search(query)
@@ -55,9 +63,10 @@ def search_news():
     show_results(results)
 
 def show_results(results): #results: news links
-    for r in results: 
+    for r in results:
+        print getNews(r) 
         for k in retrieve_entities(r):
-            print getNews(r) + " | " + k
+            print k
 
 def show_all_news():
     for n in getAllNews():
