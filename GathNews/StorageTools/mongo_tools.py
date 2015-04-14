@@ -25,6 +25,7 @@ def getNews(link):
 		return report['title']
 	else: return "Empty"
 
+
 def getAllnews():
 	client = MongoConnection()
 	db = client.test

@@ -73,10 +73,10 @@ button#query:focus {
 	margin: 10px;
 }
 a:link {
-	color:#007BFF;
 	text-decoration: none;
 }
 a:hover{
+	color:#007BFF;
 	text-decoration: underline;
 }
 

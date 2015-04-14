@@ -2,13 +2,11 @@
 import os
 import sys
 import feedparser
-sys.path.append('./storageTools')
-sys.path.append('./entities')
 from threading import Thread
 from read_html import parseHTML
-from whoosh_tools import NewsIndexing
-from mongo_tools import *
-from nameOfEntities import *
+from StorageTools.whoosh_tools import NewsIndexing
+from StorageTools.mongo_tools import *
+from entities.nameOfEntities import *
 
 NEWS_LIMIT = 99
 
@@ -38,7 +36,7 @@ def rss_parser_thread(rss, limit=NEWS_LIMIT):
 	for thr in threads: thr.join()
 
 
-def index_news(filepath="rss.txt"):
+def index_news(filepath="res/rss.txt"):
     rss_filter = lambda string: not string.isspace() and string.lstrip()[0] != '#'
     with open(filepath) as f:
         lines = filter(rss_filter, f.readlines())
@@ -48,9 +46,13 @@ def index_news(filepath="rss.txt"):
     for thr in threads: thr.join()
     print "<ALL DONE>"
 
+
+def search(query):
+    return indexing.search(query)
+
 def search_news():
     query = raw_input("Please enter something to search for: ")
-    results = indexing.search(query)
+    search(query)
     print str(len(results)) + " Articles found:"
     show_results(results)
 
@@ -71,9 +73,6 @@ def init():
         Parses the rss file for the rss links,
         for each url calls a thread to deals with it
 	"""
-    global indexing
-    indexing = NewsIndexing()
-
     cmd_line()
 
 
@@ -84,7 +83,7 @@ def cmd_line():
         '3': lambda:show_all_news(),
         '0': lambda:sys.exit(0)
     }
-    with open("titlescreen.txt") as f:
+    with open("res/titlescreen.txt") as f:
         print f.read()
 
     while 1:
@@ -97,6 +96,9 @@ def cmd_line():
         if options.has_key(cmd): options[cmd]()
         else:
             print "Invalid Command"
+
+global indexing
+indexing = NewsIndexing()
 
 if __name__ == '__main__':
     init()
