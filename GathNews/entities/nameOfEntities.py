@@ -20,14 +20,16 @@ def list_of_entities():
 		allThePeople = []
 		print "checking..."
 		for sentence in nltk.sent_tokenize(article["document"]):
-			for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence))):
+			for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence)), binary=False):
 				if hasattr(chunk, "label"):
 					if chunk.label() == "PERSON":
 						people = " ".join(c[0] for c in chunk.leaves())
 						if people in entities:
 							if people not in allThePeople:
 								allThePeople.append(people)
-						else: continue
+						else:
+							if len(people.split()) == 1 and single_names(people):
+								allThePeople.append(people)
 
 		insert_new_collections(allThePeople,article)
 
@@ -52,6 +54,16 @@ def retrieve_entities(link):
 	if report['entities']:
 		return report['entities']
 	else: return ["No entities found."]
+
+def single_names(name):
+	file = open("./res/output.txt", "r").readlines()
+	for line in file:
+		completeName = line.split()
+		return name in completeName
+
+
+
+
 
 
 
