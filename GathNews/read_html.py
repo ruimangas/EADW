@@ -20,7 +20,11 @@ def parseHTML(news_url):
     try:
         res = urllib.urlopen(news_url)
         if not res.getcode() == 200: return
-        soup = BeautifulSoup(res.read())
+
+        encoding = res.headers['content-type'].split('charset=')[-1]
+        ucontent = unicode(res.read(), encoding)
+
+        soup = BeautifulSoup(ucontent.encode('utf-8'))
         res.close()
         return parser(soup)
     except IOError: return

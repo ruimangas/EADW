@@ -1,6 +1,7 @@
 *.pyc
 newsdb
 NewsIndex/
+newsIndex/
 jquery-1.11.2.min.js
 underscore-min.js
 backbone-min.js
