@@ -5,7 +5,7 @@ from pymongo import MongoClient
 from storageTools.mongo_tools import *
 
 
-def list_of_entities():
+def list_of_entities(link):
 	client = MongoClient('localhost', 27017)
 	db = client.eadw
 	news = db.news
@@ -15,23 +15,20 @@ def list_of_entities():
 	for line in file:
 		entities.append(line.strip())
 
-	cursor = news.find() #get all news from mongo
-	for article in cursor:
-		allThePeople = []
-		print "checking..."
-		for sentence in nltk.sent_tokenize(article["document"]):
-			for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence)), binary=False):
-				if hasattr(chunk, "label"):
-					if chunk.label() == "PERSON":
-						people = " ".join(c[0] for c in chunk.leaves())
-						if people in entities:
-							if people not in allThePeople:
-								allThePeople.append(people)
-						else:
-							if len(people.split()) == 1 and single_names(people):
-								allThePeople.append(people)
+	article = news.find_one({"link" : link}) #get specific doc from mongo
 
-		insert_new_collections(allThePeople,article)
+	allThePeople = []
+	print "checking..."
+	for sentence in nltk.sent_tokenize(article["document"]):
+		for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence)), binary=False):
+			if hasattr(chunk, "label"):
+				if chunk.label() == "PERSON":
+					people = " ".join(c[0] for c in chunk.leaves())
+					if people in entities:
+						if people not in allThePeople:
+							allThePeople.append(people)
+
+	insert_new_collections(allThePeople,article)
 
 	print "DONE!"
 
@@ -55,11 +52,14 @@ def retrieve_entities(link):
 		return report['entities']
 	else: return ["No entities found."]
 
-def single_names(name):
-	file = open("./res/output.txt", "r").readlines()
-	for line in file:
-		completeName = line.split()
-		return name in completeName
+def sub_names(name,entities):
+	for fullName in entities:
+		if name in fullName:
+			return True
+	else: return False
+
+	
+
 
 
 

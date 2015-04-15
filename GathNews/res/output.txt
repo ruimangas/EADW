@@ -47368,7 +47368,7 @@ Leif Eriksson (futebolista)
 Inge Ejderstedt
 Roger Sherman
 Göran Nicklasson
-George Read (estadista dos Estados Unidos)
+George Read
 Abraham Baldwin
 Björn Nordqvist
 Claes Cronqvist
@@ -48632,7 +48632,7 @@ John Dupré
 Lance Mountain
 Willie Davenport
 Anderson Alves da Silva
-Gestão Geraldo Alckmin no governo de São Paulo
+Gestão Geraldo Alckmin
 Jeremy Soul
 Işık Koşaner
 David Di Tommaso
@@ -51010,7 +51010,7 @@ Madalena Sibila de Hesse-Darmstadt
 Jean-Claude Nallet
 Shannon Dunn-Downing
 Aziz Mahmud Hüdayi
-Governo Ranieri Mazzilli
+Ranieri Mazzilli
 Grenddy Perozo
 Frederick Gugenheim Gregory
 Marcelo Passos
@@ -55806,3 +55806,4 @@ William Forsythe (ator)
 Daniel da Silva (matemático)
 Muawiya II
 Romário Ricardo da Silva
+Rui Santos
