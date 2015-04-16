@@ -17,10 +17,8 @@ def addNews(link,title,date,document):
 
 def getNews(link):
 	db = MongoConnection()
-	hit = db.news.find_one({"link" : link})
+ 	return db.news.find_one({"link" : link})
 
-	if hit:
-		return hit['title']
 
 def getAllNews():
 	db = MongoConnection()

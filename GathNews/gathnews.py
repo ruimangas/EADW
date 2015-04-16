@@ -50,9 +50,9 @@ def index_news(filepath="res/rss.txt"):
 def search(query):
     news = []
     for link in indexing.search(query):
-        title = getNews(link)
-        if title:
-            news.append({'link':link , 'title': title})
+        doc = getNews(link)
+        if doc:
+            news.append({'link':link , 'title': doc['title'], 'text': ' '.join(doc['document'].split()[:30])})    #for now send 30 words to the user
     return news
 
 def search_news():
@@ -66,7 +66,7 @@ def search_news():
 def show_results(results): #results: news links
     for r in results:
         print getNews(r) + " --> " + '|'.join([str(item) for item in retrieve_entities(r)])
-    
+
 
 def show_all_news():
     for n in getAllNews():

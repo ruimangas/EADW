@@ -1,57 +1,60 @@
-(function ($) {
+(function($) {
 
-    var News = Backbone.Model;
 
-    var NewsList = Backbone.Collection.extend({
-
-        model: News,
-        url: function () {
-            return "search?" + $('input#query-input').serialize();
-        },
-
-        parse: function (response) {
-            return response.news
+    var NewsModel = Backbone.Model.extend({});
+    var NewsCollection = Backbone.Collection.extend({
+        model: NewsModel,
+        url: function() {
+            return '/search?' + $('.my-input').serialize();
         }
     });
-
-
 
     var NewsView = Backbone.View.extend({
         el: $('body'),
 
         events: {
-            'click button': 'search'
+            "click .my-button": "search"
         },
 
-        initialize: function () {
-            var expanded = false; //indicates if the view is expanded
-            _.bindAll(this, 'render', 'search', 'listNews');
-            this.collection = new NewsList();
+        initialize: function() {
+            var expanded = false;
+            _.bindAll(this, 'render', 'togglePanels', 'listNews')
+            this.collection = new NewsCollection();
             this.collection.bind("add", this.render);
         },
-        render: function () {
-            var self = this;
+        render: function() {
             if (!this.expanded) {
-                $("div.page-container").toggleClass("page-container page-container-expanded");
+                this.togglePanels();
                 $("ul.search-list").addClass("highlight-list");
                 this.expanded = true;
             }
-            this.listNews()
+            this.listNews();
         },
-
-        search : function () {
+        togglePanels: function() {
+            $(".sidebar").toggleClass("sidebar-center sidebar-right pure-u-1 pure-u-1-4");
+            $(".my-title").toggleClass("my-title-center my-title-right");
+            $(".my-form").toggleClass("my-form-center my-form-right");
+            $(".my-input").toggleClass("my-input-center my-input-right");
+            $(".my-button").toggleClass("my-button-center my-button-right");
+        },
+        listNews: function() {
+            $(".content").empty();
+            var template = $("#news-template").html();
+            var compiled = _.template(template);
+            console.log( this.collection.toJSON());
+            var content = compiled({items: this.collection.models});
+            $(".content").html(content);
+        },
+        search: function() {
             this.collection.fetch();
-        },
-
-        listNews : function () {
-
-            $("ul.search-list").empty();
-            console.log(this.collection.models)
-            _(this.collection.models).each(function (item) {
-                $('ul', self.el).append("<li><a href="+ item.get("link")+">"+item.get("title") + "</a></li>");
-            });
         }
 
+
     });
+
+
+
+
     var newsView = new NewsView();
+
 })(jQuery);

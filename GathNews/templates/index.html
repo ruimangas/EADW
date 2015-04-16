@@ -1,21 +1,56 @@
 <!doctype html>
 <meta charset="utf-8">
 <title>GathNews</title>
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='pure-min.css') }}"></link>
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='font-awesome-4.3.0/css/font-awesome.min.css') }}"></link>
 <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='styles.css') }}">
+<!--<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='grids-responsive-min.css') }}"></link>-->
 
-<div class="page-container">
-	<div class="title">
-		<p>GathNews
-	</div>
+<div class="pure-g">
+	<div class="pure-u-1 sidebar sidebar-center sidebar-theme-blue">
+		<div class="my-title my-title-center my-title-theme-blue">
+			<i class="fa fa-3x fa-pied-piper-alt"></i>
+			GathNews
 
-	<div class="bar">
-			<input id="query-input" type="text" name="query">
-			<button id="query" type="button">Search</button>
 		</div>
-	<div class="page-search">
-		<ul class="search-list"></ul>
+		<form class="my-form my-form-center">
+			<input name="query" class="my-input my-input-center my-input-theme-blue" type="text" placeholder="your search here.."><br>
+			<a class="pure-button  my-button my-button-center my-button-theme-blue" >
+				<i class="fa fa-search"></i>
+				Procura
+			</a>
+		</form>
+
+	</div>
+	<div class="pure-u-1 content">
+
 	</div>
 </div>
+
+<script id="news-template" type="text/template">
+	<%
+	_.each(items,function(news,a,b){
+	%>
+		<div class="news-item">
+			<div class="news-item-header">
+				<span class="news-item-title"><%= news.get('title') %></span><br>
+				<!--<span class="news-item-author-line">
+				by <a href="#" class="news-item-author">Pedro Dias</a> on <span class="article-src-wrapper"><img src="jn_logo.png"></img></span>
+				</span>-->
+			</div>
+			<hr class="news-item-rule">
+			<div class="news-item-text">
+				<p>
+					<%= news.get('text') %> ... <a href="<%= news.get('link') %>">Read more</a>
+				</p>
+			</div>
+		</div>
+	<%
+	});
+	%>
+</script>
+
 <script src="{{url_for('static',filename='jquery-1.11.2.min.js') }}"></script>
 <script src="{{url_for('static',filename='underscore-min.js') }}"></script>
 <script src="{{url_for('static',filename='backbone-min.js') }}"></script>
