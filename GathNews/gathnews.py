@@ -8,13 +8,15 @@ from storageTools.whoosh_tools import NewsIndexing
 from storageTools.mongo_tools import *
 from entities.nameOfEntities import *
 
-NEWS_LIMIT = 99
+NEWS_LIMIT = 23
+
 
 def html_parser_thread(link, date):
     """
         Thread called for parsing html from the link and storing
         the resulting contents into the storage
     """
+
     news = parseHTML(link)
     if not news: return
 
@@ -24,17 +26,17 @@ def html_parser_thread(link, date):
     print "Stored: "+ news[0]
 
 def rss_parser_thread(rss, limit=NEWS_LIMIT):
-	"""
+    """
         This thread picks all the news links and
-		calls another thread to parse the html for every article
-		limit the max number of threads to start from the url
+        calls another thread to parse the html for every article
+        limit the max number of threads to start from the url
 
-	"""
-	d = feedparser.parse(rss)
-	threads = [Thread(target=html_parser_thread, args=(entry.link, entry.published))
-                for entry in d.entries ][:limit]
-	for thr in threads: thr.start()
-	for thr in threads: thr.join()
+    """
+    d = feedparser.parse(rss)
+    threads = [Thread(target=html_parser_thread, name=entry.link, args=(entry.link, entry.published))\
+                    for entry in d.entries ][:limit]
+    for thr in threads: thr.start()
+    for thr in threads: thr.join()
 
 
 def index_news(filepath="res/rss.txt"):
