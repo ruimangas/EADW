@@ -8,6 +8,7 @@ from storageTools.whoosh_tools import NewsIndexing
 from storageTools.mongo_tools import *
 from entities.nameOfEntities import *
 from entities.statistics import *
+from entities.relationships import *
 
 NEWS_LIMIT = 23
 
@@ -83,6 +84,12 @@ def statistics():
             print name + " appeared " + str(number) + " times in all the news." 
     else: print "Name " + query + " not found."
 
+def relationships():
+    query = raw_input("Entity name: ")
+    print "Relationships:"
+    print entities_same_document(query)
+
+
 def init():
     """
         Parses the rss file for the rss links,
@@ -97,6 +104,7 @@ def cmd_line():
         '2': lambda:search_news(),
         '3': lambda:show_all_news(),
         '4': lambda:statistics(),
+        '5': lambda:relationships(),
         '0': lambda:sys.exit(0)
     }
     with open("res/titlescreen.txt") as f:
@@ -107,6 +115,7 @@ def cmd_line():
     	print "2) Search news"
         print "3) Get All News"
         print "4) Get statistics"
+        print "5) Relationships"
         print "0) Quit"
 
         cmd = raw_input(">>").strip()
