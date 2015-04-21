@@ -75,10 +75,13 @@ def show_all_news():
         print n['title'] + ":\n" + n['document'] + "\n"
 
 def statistics():
+    famous_personalities()
     query = raw_input("Name to search: ")
     results = count_entities(query)
-    for name, number in results.items():
-        print name + " appeared " + str(number) + " times in all news."
+    if not results == {}:
+        for name, number in results.items():
+            print name + " appeared " + str(number) + " times in all the news." 
+    else: print "Name " + query + " not found."
 
 def init():
     """

@@ -8,16 +8,12 @@ def count_entities(searchName):
 
 	count_dic = {}
 
-	client = MongoClient('localhost', 27017)
-	db = client.eadw
-	peps = db.namesOfPersons
-
 	file = open("./res/output.txt", "r").readlines()
 	entities = []
 	for line in file:
 		entities.append(line.strip())
 
-	cursor = peps.find()
+	cursor = entities_mongo_helper().find()
 
 	if searchName in entities:
 		for doc in cursor:
@@ -28,10 +24,30 @@ def count_entities(searchName):
 							count_dic[name] = 1
 						else: count_dic[name] += 1
 
-
-	else: return "Invalid Name"
-
 	return count_dic
+
+def famous_personalities():
+
+	popularity_dic = {}
+
+	cursor = entities_mongo_helper().find()
+
+	for article in cursor:
+		for name in article['entities']:
+			if name not in popularity_dic.keys():
+				popularity_dic[name] = 1
+			else: popularity_dic[name] += 1
+
+	key,value = max(popularity_dic.iteritems(), key=lambda x:x[1])
+
+	print "The most famous guy is " + key + " with " + str(value) + " appearances in all news."
+
+def entities_mongo_helper():
+	client = MongoClient('localhost', 27017)
+	db = client.eadw
+	peps = db.namesOfPersons
+	return peps
+
 
 
 
