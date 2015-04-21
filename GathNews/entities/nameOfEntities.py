@@ -15,20 +15,27 @@ def list_of_entities(link):
 	for line in file:
 		entities.append(line.strip())
 
+	file = open("./res/output2.txt","r").readlines()
+	organizations = []
+	for l in file:
+		organizations.append(l.strip())
+
 	article = news.find_one({"link" : link}) #get specific doc from mongo
 
-	allThePeople = []
+	allEntities = []
 	print "checking..."
 	for sentence in nltk.sent_tokenize(article["document"]):
 		for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence)), binary=False):
+			print chunk
 			if hasattr(chunk, "label"):
-				if chunk.label() == "PERSON":
-					people = " ".join(c[0] for c in chunk.leaves())
-					if people in entities:
-						if people not in allThePeople:
-							allThePeople.append(people)
+				if chunk.label() == "PERSON" or chunk.label() == "ORGANIZATION":
+					et = " ".join(c[0] for c in chunk.leaves())
+					if et in entities or et in organizations:
+						if et not in allEntities:
+							allEntities.append(et)
 
-	insert_new_collections(allThePeople,article)
+
+	insert_new_collections(allEntities,article)
 
 	print "DONE!"
 

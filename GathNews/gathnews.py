@@ -69,7 +69,6 @@ def show_results(results): #results: news links
     for r in results:
         print getNews(r) + " --> " + '|'.join([str(item) for item in retrieve_entities(r)])
 
-
 def show_all_news():
     for n in getAllNews():
         print n['title'] + ":\n" + n['document'] + "\n"
