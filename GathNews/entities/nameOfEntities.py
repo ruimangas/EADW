@@ -52,11 +52,6 @@ def retrieve_entities(link):
 		return report['entities']
 	else: return ["No entities found."]
 
-def sub_names(name,entities):
-	for fullName in entities:
-		if name in fullName:
-			return True
-	else: return False
 
 	
 
