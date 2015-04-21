@@ -26,7 +26,6 @@ def list_of_entities(link):
 	print "checking..."
 	for sentence in nltk.sent_tokenize(article["document"]):
 		for chunk in nltk.ne_chunk(nltk.pos_tag(nltk.word_tokenize(sentence)), binary=False):
-			print chunk
 			if hasattr(chunk, "label"):
 				if chunk.label() == "PERSON" or chunk.label() == "ORGANIZATION":
 					et = " ".join(c[0] for c in chunk.leaves())
