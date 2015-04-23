@@ -25,3 +25,10 @@ def getNews(link):
 def getAllNews():
 	db = MongoConnection()
 	return db.news.find()
+
+def entities_mongo_helper():
+	client = MongoClient('localhost', 27017)
+	db = client.eadw
+	peps = db.namesOfPersons
+	return peps
+

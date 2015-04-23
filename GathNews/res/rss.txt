@@ -15,11 +15,11 @@ http://feeds.jn.pt/JN-Destaques
 http://feeds.jn.pt/JN-Politica
 http://feeds.jn.pt/JN-Sociedade
 http://feeds.jn.pt/JN-Saude
-#http://feeds.jn.pt/JN-Educacao
-#http://feeds.jn.pt/JN-Media
+http://feeds.jn.pt/JN-Educacao
+http://feeds.jn.pt/JN-Media
 #http://feeds.jn.pt/JN-Seguranca
-#http://feeds.jn.pt/JN-Economia
-#http://feeds.jn.pt/JN-Pais
+http://feeds.jn.pt/JN-Economia
+http://feeds.jn.pt/JN-Pais
 http://feeds.jn.pt/JN-Mundo
 #http://feeds.jn.pt/JN-Brasil
 #http://feeds.jn.pt/JN-Palops

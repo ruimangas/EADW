@@ -43,11 +43,6 @@ def famous_personalities():
 	print "The most famous guy is " + key + " with " + str(value) + " appearances in all news."
 
 
-def entities_mongo_helper():
-	client = MongoClient('localhost', 27017)
-	db = client.eadw
-	peps = db.namesOfPersons
-	return peps
 
 
 
