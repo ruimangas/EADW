@@ -87,7 +87,9 @@ def statistics():
 def relationships():
     query = raw_input("Entity name: ")
     print "Relationships:"
-    print entities_same_document(query)
+    if len(entities_same_document(query).get(query)) == 0:
+        print "No entities were found."
+    else: print entities_same_document(query)
 
 
 def init():

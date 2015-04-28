@@ -10,14 +10,14 @@ def list_of_entities(link):
 	db = client.eadw
 	news = db.news
 
-	file = open("./res/output.txt", "r").readlines()
+	names_file = open("./res/output.txt", "r").readlines()
 	entities = []
-	for line in file:
+	for line in names_file:
 		entities.append(line.strip())
 
-	file = open("./res/output2.txt","r").readlines()
+	organizations_file = open("./res/output2.txt","r").readlines()
 	organizations = []
-	for l in file:
+	for l in organizations_file:
 		organizations.append(l.strip())
 
 	article = news.find_one({"link" : link}) #get specific doc from mongo
@@ -32,7 +32,6 @@ def list_of_entities(link):
 					if et in entities or et in organizations:
 						if et not in allEntities:
 							allEntities.append(et)
-
 
 	insert_new_collections(allEntities,article)
 
@@ -57,14 +56,6 @@ def retrieve_entities(link):
 	if report['entities']:
 		return report['entities']
 	else: return ["No entities found."]
-
-
-	
-
-
-
-
-
 
 
 
