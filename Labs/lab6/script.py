@@ -4,13 +4,12 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
 
-
 import re
 import os
 
 def blacklist((word, setcount)):
 	perc = len(setcount) / len(train.data)
-	return len(setcount) >= 3 and perc < 0.9
+	return len(setcount) >= 3 and perc < 0.9 if word.isalpha() else False
 		
 
 stop_words = []
@@ -22,7 +21,6 @@ for filen in os.listdir('.'):
 train = fetch_20newsgroups(subset='train')
 test = fetch_20newsgroups(subset='test')
 
-train.data = train.data[:20]
 
 print train.data[14]
 
@@ -34,14 +32,20 @@ stop_regex = '|'.join(stop_words)
 for i,data in enumerate(train.data):
 	data =re.sub(r'\b{}\b'.format('('+stop_regex+')'), '', data) #not the best solution, will also remove  substr of words (meal != me) -> al
 	train.data[i] = data.split(':')[-1]		#again not the best way, supposes no : is used on the text
-	for word in data.split():
-		appears.setdefault(word, set()).add(i)
+	
+	if 'banned.txt' not in os.listdir('.'):
+		for word in data.split():
+			appears.setdefault(word, set()).add(i)
 
-banned = map(lambda x :x[0], filter(blacklist, appears.items()))
+if 'banned.txt' not in os.listdir('.'):
+	banned = map(lambda x :x[0], filter(blacklist, appears.items()))
+	banned_regex = '|'.join(banned).encode('utf-8')
 
-print train.data[14]
+	with open('banned.txt', 'w') as f:
+		f.write(banned_regex)
+else:
+	banned_regex = open('banned.txt').read()
 
-banned_regex = '|'.join(banned)
 for i,data in enumerate(train.data):
 	train.data[i] = re.sub(r'\b{}\b'.format('('+banned_regex+')'), '', data)
 
