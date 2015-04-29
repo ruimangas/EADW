@@ -7,10 +7,11 @@ import time
 import urlparse
 import robotparser
 
+#Name of the folder where the important html files are stored
 FOLDER = "webhtml"
 
 def full_url(endpoint):
-	reg = 'http:\/\/|https:\/\/'
+	reg = 'http:\/\/|https:\/\/'	
 	return urlparse.urljoin(domain, endpoint) if not re.match(reg, endpoint) else endpoint
 
 
@@ -20,7 +21,6 @@ def robot_file(domain):
 	def _clos(url):
 		return rp.can_fetch("*", url)
 	return _clos
-
 
 def filter_links (urls):
 	urls = filter(lambda l: not l.startswith("#"),urls)
@@ -47,8 +47,8 @@ def open_links(urls, depth=1, done_links = [] , topic=[]):
 		done_links.append(url)
 
 		html = urlopen(url).read()
-		if topic and not has_topic(html, topic): continue
-		with open(FOLDER + "/" + md5.new(url).hexdigest(),'w+') as f: f.write(html)
+		if not topic or has_topic(html, topic): 
+			with open(FOLDER + "/" + md5.new(url).hexdigest(),'w+') as f: f.write(html)
 		
 		ls = filter_links(re.findall(linksre, html, re.I))
 		time.sleep(1)

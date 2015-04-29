@@ -9,7 +9,7 @@ import os
 
 def blacklist((word, setcount)):
 	perc = len(setcount) / len(train.data)
-	return len(setcount) >= 3 and perc < 0.9 if word.isalpha() else False
+	return (len(setcount) >= 3 and perc < 0.9) if word.isalpha() else False
 		
 
 stop_words = []
@@ -21,9 +21,8 @@ for filen in os.listdir('.'):
 train = fetch_20newsgroups(subset='train')
 test = fetch_20newsgroups(subset='test')
 
-
-print train.data[14]
-
+if 'files' not in os.listdir('.'):
+	os.mkdir('files')
 
 appears = {}
 stop_regex = '|'.join(stop_words)
@@ -46,10 +45,12 @@ if 'banned.txt' not in os.listdir('.'):
 else:
 	banned_regex = open('banned.txt').read()
 
+print "Doing last check"
 for i,data in enumerate(train.data):
 	train.data[i] = re.sub(r'\b{}\b'.format('('+banned_regex+')'), '', data)
+	with open('files/'+str(i)+".txt", 'w') as f:
+		f.write(train.data[i].encode('utf-8')) 
 
-print train.data[14]
 
 vectorizer = TfidfVectorizer()
 trainvec = vectorizer.fit_transform(train.data)
