@@ -5,12 +5,12 @@ from nltk.tag import *
 def name_entities_ex1():
     s = "isto e um teste pbraz pedro rui"
 
-    w = nltk.word_tokenize(s)
-    p = nltk.pos_tag(w)
-    a = nltk.ne_chunk(p, binary=True)
+    x = nltk.word_tokenize(s)
+    y = nltk.pos_tag(x)
+    z = nltk.ne_chunk(y, binary=True)
 
-    print p
-    print a
+    print y
+    print z
     
 def name_entities_ex2():
     file = open("aula03_cfc.txt", "r").readlines()
