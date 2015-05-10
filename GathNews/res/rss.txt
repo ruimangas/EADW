@@ -1,15 +1,15 @@
-http://feeds.dn.pt/DN-Pessoas
-http://feeds.dn.pt/DN-Globo
-http://feeds.dn.pt/DN-Economia
-http://feeds.dn.pt/DN-Ciencia
-http://feeds.dn.pt/DN-Artes
-http://feeds.dn.pt/DN-Media
-http://feeds.dn.pt/DN-Opiniao
-http://feeds.dn.pt/DN-Pessoas
-http://feeds.dn.pt/DN-Desporto
-http://feeds.dn.pt/DN-Cartaz
-http://feeds.dn.pt/DN-Politica
-http://feeds.dn.pt/DN-Gente
+#http://feeds.dn.pt/DN-Pessoas
+#http://feeds.dn.pt/DN-Globo
+#http://feeds.dn.pt/DN-Economia
+#http://feeds.dn.pt/DN-Ciencia
+#http://feeds.dn.pt/DN-Artes
+#http://feeds.dn.pt/DN-Media
+#http://feeds.dn.pt/DN-Opiniao
+#http://feeds.dn.pt/DN-Pessoas
+#http://feeds.dn.pt/DN-Desporto
+#http://feeds.dn.pt/DN-Cartaz
+#http://feeds.dn.pt/DN-Politica
+#http://feeds.dn.pt/DN-Gente
 #http://feeds.dn.pt/DN-Galeria
 http://feeds.jn.pt/JN-Destaques
 http://feeds.jn.pt/JN-Politica
@@ -34,7 +34,7 @@ http://feeds.jn.pt/JN-Gente
 #http://feeds.jn.pt/JN-Audios
 #http://feeds.jn.pt/JN-Infografias
 
-http://www.cmjornal.xl.pt/rss.aspx
+#http://www.cmjornal.xl.pt/rss.aspx
 
 
 #http://feeds.dn.pt/DN-Ultimas <- pode ter repetidas

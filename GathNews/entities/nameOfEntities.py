@@ -35,8 +35,6 @@ def list_of_entities(link):
 
 	insert_new_collections(allEntities,article)
 
-	print "DONE!"
-
 def insert_new_collections(allPersons, oldArticle):
 	client = MongoClient('localhost', 27017)
 	db = client.eadw

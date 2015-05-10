@@ -9,6 +9,7 @@ from storageTools.mongo_tools import *
 from entities.nameOfEntities import *
 from entities.statistics import *
 from entities.relationships import *
+from pymongo import MongoClient
 
 NEWS_LIMIT = 23
 
@@ -23,6 +24,7 @@ def html_parser_thread(link, date):
     if not news: return
 
     success = addNews(link, news[0], date,  ' '.join(news[1:]))
+    #list_of_entities(link)
     if success:
         indexing.insert(link, news[0], ' '.join(news[1:]))
     print "Stored: "+ news[0]
@@ -49,7 +51,16 @@ def index_news(filepath="res/rss.txt"):
     threads = [Thread(target=rss_parser_thread, args=(line,)) for line in lines]
     for thr in threads: thr.start()
     for thr in threads: thr.join()
-    print "<ALL DONE>"
+    print "<STORAGE DONE>"
+    check_entities()
+
+def check_entities():
+    print "<ENTITIES SEARCH HAS STARTED>"
+    db = MongoConnection()
+    all_links = db.news.distinct('link')
+    for link in all_links:
+        list_of_entities(link)
+    print "<DONE>"
 
 def search(query):
     news = []
@@ -63,8 +74,8 @@ def search_news():
     query = raw_input("Please enter something to search for: ")
     results = indexing.search(query)
     print str(len(results)) + " Articles found:"
-    for ent in results:
-        list_of_entities(ent)
+    #for ent in results:
+        #list_of_entities(ent)
     show_results(results)
 
 def show_results(results): #results: news links
