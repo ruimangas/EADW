@@ -40,26 +40,29 @@ def famous_personalities():
 				popularity_dic[name] = 1
 			else: popularity_dic[name] += 1
 
-	key,value = max(popularity_dic.iteritems(), key=lambda x:x[1])
+	new_list = []
 
-	print "The most famous guy is " + key + " with " + str(value) + " appearances in all news."
+	for key, value in popularity_dic.items():
+		if value == max(list(popularity_dic.values())):
+			new_list.append(key)
 
+	print "The most famous entities are: " + ",".join(new_list)
 
-	names_e = []
-	number_e = []
+	#names_e = []
+	#number_e = []
 
-	for name_et, number in popularity_dic.items():
-		names_e.append(name_et)
-		number_e.append(number)
+	#for name_et, number in popularity_dic.items():
+		#names_e.append(name_et)
+		#number_e.append(number)
 
-	data = Data([
-		Bar(
-			x = names_e,
-			y = number_e
-		)
-	])
+	#data = Data([
+		#Bar(
+			#x = names_e,
+			#y = number_e
+		#)
+	#])
 
-	plot_url = py.plot(data, filename='basic-bar')
+	#plot_url = py.plot(data, filename='basic-bar')
 
 
 
