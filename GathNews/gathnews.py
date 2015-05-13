@@ -74,8 +74,6 @@ def search_news():
     query = raw_input("Please enter something to search for: ")
     results = indexing.search(query)
     print str(len(results)) + " Articles found:"
-    #for ent in results:
-        #list_of_entities(ent)
     show_results(results)
 
 def show_results(results): #results: news links
