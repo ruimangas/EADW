@@ -100,7 +100,9 @@ def relationships():
     print "Relationships:"
     if len(entities_same_document(query).get(query)) == 0:
         print "No entities were found."
-    else: print entities_same_document(query)
+    else:
+       (key, val)  = entities_same_document(query).items()[0]
+       print key + " --> " + '|'.join(set(val))
 
 
 def init():

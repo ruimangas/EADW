@@ -45,21 +45,21 @@ def famous_personalities():
 	print "The most famous guy is " + key + " with " + str(value) + " appearances in all news."
 
 
-	# names_e = []
-	# number_e = []
+	names_e = []
+	number_e = []
 
-	# for name_et, number in popularity_dic.items():
-	# 	names_e.append(name_et)
-	# 	number_e.append(number)
+	for name_et, number in popularity_dic.items():
+		names_e.append(name_et)
+		number_e.append(number)
 
-	# data = Data([
-	# 	Bar(
-	# 		x = names_e,
-	# 		y = number_e
-	# 	)
-	# ])
+	data = Data([
+		Bar(
+			x = names_e,
+			y = number_e
+		)
+	])
 
-	# plot_url = py.plot(data, filename='basic-bar')
+	plot_url = py.plot(data, filename='basic-bar')
 
 
 
