@@ -1,2 +1,7 @@
 \section{Extracção e armanezamento de noticías}
+As noticías são extraídas de várias fontes jornalísticas e são introduzidas numa plataforma de indexação chamada \textit{whoosh}. O \textit{whoosh} compila as noticías utilizando o algoritmo de classificação \textit{BM25}. Posteriormente, são armazenadas numa colecção de noticías na nossa base de dados não relacional \textit{MongoDB}. Para aumentar a velocidade da extracção, os pedidos das páginas \textit{web} são separados em \textit{threads} com o objectivo de conseguirmos um maior \textit{throughput} visto que a comunicação pela internet é o maior \textit{bottleneck} da aplicação.
+
+Na nossa aplicação o \textit{feedparser}, acede a um conjunto de \textit{links} RSS do qual extrai os endereços das noticías que são acedidos paralelamente. Cada página é analisado com o \textit{beautiful soup} sendo extraídos unicamente o título e o corpo do artigo. Para isto foram criados três \textit{parsers} que lidam com a estrutura da páginas de maneira diferente, dependendo do site da notícia.
+
+As noticías são armazenadas na base de dados com o objectivo de evitar colisões, ou seja, caso uma noticía já tenha sido processada anteriormente, não é indexada novamente. Além disso, o \textit{whoosh} apresenta os resultados com os links das notícias, para que depois os elementos de cada notícia possam ser acedidos a partir da base de dados, utilizando o link como chave.
 
