@@ -4,7 +4,7 @@ A extração de entidades no nosso sistema é realizada com base numa lista de n
 
 \begin{enumerate}
   \item Recuperação de todas as notícias da base de dados MongoDB;
-  \item Para cada frase de cada noticía foram gerados \textit{tokens} através da função \textit{nltk.sent\_tokenize}
+  \item Para cada frase de cada notícia foram gerados \textit{tokens} através da função \textit{nltk.sent\_tokenize}
   \item Classificação de cada palavra de cada frase através da função \textit{nltk.pos\_tag};
   \item Verificação do nó PERSON para ver se este está contido na lista de entidades descrita anteriormente. Se sim, consideramos como sendo uma entidade. Caso contrário, descartamos esse nome. Estas entidades descobertas são depois colocadas numa nova coleção da base de dados à qual demos o nome de \textit{namesOfPersons}. 
 \end{enumerate}
