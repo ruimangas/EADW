@@ -1,5 +1,5 @@
 \section{Extração de entidades}
-A extração de entidades no nosso sistema é realizada com base numa lista de nomes de personalidades conhecida \textit{a priori}. O objectivo desta abordagem é comparar os resultados obtidos no nosso sistema com os da lista de nomes como forma de validação. Para obter uma a nossa lista de nomes, usámos uma técnica de processamento de linguagem natural (através do módulo \textit{nltk}). O procedimento é o seguinte:
+A extração de entidades no nosso sistema é realizada com base numa lista de nomes de personalidades conhecida \textit{a priori}. O objectivo desta abordagem é comparar os resultados obtidos no nosso sistema com os da lista de nomes como forma de validação. Para obter a nossa lista de nomes, usámos uma técnica de processamento de linguagem natural (através do módulo \textit{nltk}). O procedimento é o seguinte:
 
 
 \begin{enumerate}
@@ -9,9 +9,9 @@ A extração de entidades no nosso sistema é realizada com base numa lista de n
   \item Verificação do nó PERSON para ver se este está contido na lista de entidades descrita anteriormente. Se sim, consideramos como sendo uma entidade. Caso contrário, descartamos esse nome. Estas entidades descobertas são depois colocadas numa nova coleção da base de dados à qual demos o nome de \textit{namesOfPersons}. 
 \end{enumerate}
 
-Contudo, esta implementação produz alguns problemas. Sendo por exemplo, muito comum o nome do primeiro ministro aparecer nas notícias como `Passos Coelho` e não como `Pedro Passos Coelho` o nosso sistema não considera o primeiro caso como sendo uma entidade pois na lista inicial só aparece o segundo caso. Tentámos resolver este problema fazendo procuras por \textit{substrings}. Contudo, apesar desta abordagem funcionar para casos como o descrito acima, produzia inúmeros resultados errados. Como resultado disso, decidimos não comprometer o nosso sistema e mantivémos a abordagem inicial estando cientes que falhava nalguns casos.
+Contudo, esta implementação produz alguns problemas. Sendo, por exemplo, muito comum o nome do primeiro ministro aparecer nas notícias como `Passos Coelho` e não como `Pedro Passos Coelho`, o nosso sistema não considera o primeiro caso como sendo uma entidade pois na lista inicial só aparece o segundo caso. Tentámos resolver este problema fazendo procuras por \textit{substrings}. Contudo, apesar desta abordagem funcionar para casos como o descrito acima, produzia inúmeros resultados errados. Como tal, decidimos não comprometer o nosso sistema e mantivémos a abordagem inicial, estando cientes que falhava nalguns casos.
 
-As entidades extraídas são apresentadas ao utilizador quando este faz uma procura. Apresentamos os títulos das notícias que contêm uma desterminado \textit{query} escrita pelo utilizador e à frente desta as entidades encontradas na mesma. Em anexo, estão contidas algumas imagens que descrevem a funcionalidade anterior.
+As entidades extraídas são apresentadas ao utilizador quando este faz uma procura. Apresentamos os títulos das notícias que contêm uma desterminada \textit{query} escrita pelo utilizador e, à frente desta, as entidades encontradas na mesma. Em anexo, estão contidas algumas imagens que descrevem a funcionalidade anterior.
 
 Por fim, para efeitos estatísticos fazemos uma contagem de entidades para conseguirmos determinar a personalidade que mais apareceu em todas as notícias extraídas.
 
